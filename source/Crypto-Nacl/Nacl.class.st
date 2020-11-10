@@ -60,7 +60,7 @@ Nacl class >> apiCryptoPwHashOutput: out input: in inputLength: inlen opsLimit: 
 	"Low level api. Use pwHashString or pwHashUtf8StringClean"
 	self assertInitialized.
 	^ self
-		ffiCall: #( int crypto_pwhash_str(uchar *out , uchar *in , ulonglong inlen , ulonglong ops , size_t mem)) library: Nacl
+		ffiCall: #( int crypto_pwhash_str(uchar *out , uchar *in , ulonglong inlen , ulonglong ops , size_t mem))  module:  Nacl
 ]
 
 { #category : #api }
@@ -305,7 +305,7 @@ Nacl class >> pwCheckForRehash: str opslimit: ops memlimit: mem [
 	result := self
 		ffiCall:
 			#(int crypto_pwhash_str_needs_rehash #(char * str , ulonglong ops , size_t mem))
-		library: Nacl.
+		module: Nacl.
 	^ result
 ]
 
@@ -327,49 +327,49 @@ Nacl class >> pwHash: password opslimit: ops memlimit: mem [
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashMemlimitInteractive [
-	^ self ffiCall: #(size_t crypto_pwhash_memlimit_interactive()) library: Nacl 
+	^ self ffiCall: #(size_t crypto_pwhash_memlimit_interactive()) module: Nacl 
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashMemlimitMax [
-	^ self ffiCall: #(size_t crypto_pwhash_memlimit_max()) library: Nacl 
+	^ self ffiCall: #(size_t crypto_pwhash_memlimit_max()) module: Nacl 
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashMemlimitMin [
-	^ self ffiCall: #(size_t crypto_pwhash_memlimit_min()) library: Nacl 
+	^ self ffiCall: #(size_t crypto_pwhash_memlimit_min()) module: Nacl 
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashMemlimitSensitive [
-	^ self ffiCall: #(size_t crypto_pwhash_memlimit_sensitive()) library: Nacl 
+	^ self ffiCall: #(size_t crypto_pwhash_memlimit_sensitive()) module: Nacl 
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashOpslimitInteractive [
-	^ self ffiCall: #( size_t crypto_pwhash_opslimit_interactive() ) library: Nacl
+	^ self ffiCall: #( size_t crypto_pwhash_opslimit_interactive() ) module: Nacl
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashOpslimitMax [
-	^ self ffiCall: #( size_t crypto_pwhash_opslimit_max() ) library: Nacl
+	^ self ffiCall: #( size_t crypto_pwhash_opslimit_max() ) module: Nacl
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashOpslimitMin [
-	^ self ffiCall: #( size_t crypto_pwhash_opslimit_min() ) library: Nacl
+	^ self ffiCall: #( size_t crypto_pwhash_opslimit_min() ) module: Nacl
 ]
 
 { #category : #'password hashing/limits' }
 Nacl class >> pwHashOpslimitSensitive [
-	^ self ffiCall: #( size_t crypto_pwhash_opslimit_sensitive() ) library: Nacl
+	^ self ffiCall: #( size_t crypto_pwhash_opslimit_sensitive() ) module: Nacl
 ]
 
 { #category : #'password hashing/private' }
 Nacl class >> pwHashStrBytes [
 	"The maximum number of bytes in password hash. Provided by libsodium and can change.
 	The actual hash size can be smaller."
-	^ self ffiCall: #( size_t crypto_pwhash_strbytes() ) library: Nacl 
+	^ self ffiCall: #( size_t crypto_pwhash_strbytes() ) module: Nacl 
 ]
 
 { #category : #'password hashing' }
@@ -416,7 +416,7 @@ Nacl class >> pwHashUtf8StringClean: password opslimit: ops memlimit: mem [
 
 { #category : #'password hashing/private' }
 Nacl class >> pwHashVerify: str in: pwd inLen: pwdlen [
-	^ self ffiCall: #( int crypto_pwhash_str_verify( char *str , char *pwd, ulonglong pwdlen)) library: Nacl
+	^ self ffiCall: #( int crypto_pwhash_str_verify( char *str , char *pwd, ulonglong pwdlen)) module: Nacl
 ]
 
 { #category : #api }
